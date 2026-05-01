@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nosso Cantinho 💖</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  text-align: center;
+  background: linear-gradient(135deg, #ff9a9e, #fecfef);
+  overflow-x: hidden;
+}
+
+#entrada {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.coracao {
+  font-size: 100px;
+  cursor: pointer;
+  animation: pulsar 1s infinite;
+}
+
+@keyframes pulsar {
+  50% { transform: scale(1.2); }
+}
+
+#site {
+  display: none;
+  padding: 20px;
+}
+
+.foto img {
+  width: 90%;
+  max-width: 350px;
+  border-radius: 20px;
+  margin: 15px 0;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+#contador {
+  background: rgba(255, 105, 180, 0.55);
+  padding: 18px;
+  border-radius: 18px;
+  display: inline-block;
+  margin: 20px auto;
+  font-size: 18px;
+  line-height: 1.9;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 15px rgba(255,105,180,0.4);
+}
+
+.titulo {
+  background: rgba(255, 105, 180, 0.55);
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 22px;
+  margin: 25px auto;
+  width: 80%;
+  box-shadow: 0 0 10px rgba(255,105,180,0.3);
+}
+
+.disco {
+  width: 220px;
+  height: 220px;
+  margin: auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, #111, #000);
+  position: relative;
+}
+
+.disco::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    rgba(255,255,255,0.05) 0px,
+    rgba(255,255,255,0.05) 1px,
+    transparent 2px,
+    transparent 5px
+  );
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(145deg,#b266ff,#6a00ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+
+.play-btn::before {
+  content:"";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 15px 0 15px 25px;
+  border-color: transparent transparent transparent white;
+}
+
+.play-btn.pause::before {
+  content:"";
+  border: none;
+}
+
+.play-btn.pause::after,
+.play-btn.pause span {
+  position: absolute;
+  width: 6px;
+  height: 22px;
+  background: white;
+}
+
+.play-btn.pause::after {
+  left: 40%;
+}
+
+.play-btn.pause span {
+  right: 40%;
+}
+
+.girando {
+  animation: girar 3s linear infinite;
+}
+
+@keyframes girar {
+  from { transform: rotate(0deg);}
+  to { transform: rotate(360deg);}
+}
+
+.poemas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 15px;
+}
+
+.poema {
+  background: rgba(255, 105, 180, 0.55);
+  color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255,105,180,0.3);
+}
+
+.poema-titulo {
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.poema-conteudo {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  padding: 0 15px;
+  white-space: pre-line;
+  text-align: left;
+}
+
+.poema.ativo .poema-conteudo {
+  max-height: 2000px;
+  padding: 15px;
+}
+
+.emoji {
+  position: fixed;
+  opacity: 0.18;
+}
+
+@keyframes cair {
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="entrada">
+  <h2>Para você Nana, meu amor 💖</h2>
+  <div class="coracao" onclick="abrir()">❤️</div>
+</div>
+
+<div id="site">
+
+<h1>Nosso cantinho 💖</h1>
+
+<div class="foto">
+  <img src="COLE_AQUI_LINK_DA_FOTO">
+</div>
+
+<div id="contador"></div>
+
+<div class="titulo">💿 Dedicado pra você ❤️</div>
+
+<div class="disco" id="disco">
+  <div class="play-btn" onclick="play()" id="btn">
+    <span></span>
+  </div>
+</div>
+
+<h3>Anjos - Venere Vai Venus</h3>
+
+<!-- PLAYER REAL -->
+<audio id="musica">
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<div class="titulo">💌 Poemas</div>
+
+<div class="poemas">
+<div class="poema">
+<div class="poema-titulo" onclick="toggle(this)">Poema 1</div>
+<div class="poema-conteudo">
+Se um dia o peso for grande demais
+e seus passos hesitarem…
+me deixa ser tuas pernas,
+e te carregar com todo o cuidado do mundo
+
+Se as lágrimas vierem sem pedir licença,
+me deixa ser o teu abrigo,
+o ombro onde você repousa,
+o abraço que acolhe
+e transforma dor em calma
+
+Se o medo te encontrar no meio do caminho,
+me deixa ser tua coragem
+não pra enfrentá-lo por você,
+mas pra te lembrar
+que você nunca mais estará sozinha
+
+E se a noite parecer longa demais,
+se tudo ao redor escurecer…
+me deixa ser teu brilho,
+a luz que insiste em ficar
+até o amanhecer
+
+Porque te amar é isso:
+não te tomar a força que já é tua,
+mas caminhar ao teu lado,
+segurando firme,
+cuidando com carinho,
+fazendo do meu amor
+um lugar seguro pra você existir
+
+E sempre que o mundo tentar te cansar…
+lembra:
+em mim, você pode descansar
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+function abrir(){
+  document.getElementById("entrada").style.display="none";
+  document.getElementById("site").style.display="block";
+}
+
+/* CONTADOR */
+const inicio = new Date(2026,3,8);
+
+function atualizar(){
+  const agora = new Date();
+
+  let anos = agora.getFullYear() - inicio.getFullYear();
+  let meses = agora.getMonth() - inicio.getMonth();
+  let dias = agora.getDate() - inicio.getDate();
+
+  if(dias < 0){
+    meses--;
+    dias += new Date(agora.getFullYear(),agora.getMonth(),0).getDate();
+  }
+
+  if(meses < 0){
+    anos--;
+    meses += 12;
+  }
+
+  const diff = agora - inicio;
+
+  const semanas = Math.floor(diff/(1000*60*60*24*7));
+  const horas = Math.floor(diff/(1000*60*60));
+  const minutos = Math.floor(diff/(1000*60));
+  const segundos = Math.floor(diff/1000);
+
+  document.getElementById("contador").innerHTML =
+    anos + " anos 💖<br>" +
+    meses + " meses 💘<br>" +
+    semanas + " semanas ❤️<br>" +
+    dias + " dias 💞<br>" +
+    horas + " horas ⏰<br>" +
+    minutos + " minutos ⌛<br>" +
+    segundos + " segundos ⏳";
+}
+
+setInterval(atualizar,1000);
+
+/* PLAYER CORRIGIDO */
+const audio = document.getElementById("musica");
+const disco = document.getElementById("disco");
+const btn = document.getElementById("btn");
+
+function play(){
+  if(audio.paused){
+    audio.play().then(()=>{
+      disco.classList.add("girando");
+      btn.classList.add("pause");
+    }).catch(()=>{
+      alert("Erro ao tocar a música 😢");
+    });
+  }else{
+    audio.pause();
+    disco.classList.remove("girando");
+    btn.classList.remove("pause");
+  }
+}
+
+/* POEMA */
+function toggle(el){
+  el.parentElement.classList.toggle("ativo");
+}
+
+/* FUNDO */
+for(let i=0;i<40;i++){
+  let e=document.createElement("div");
+  e.className="emoji";
+  e.innerHTML="💖";
+  e.style.top=Math.random()*100+"%";
+  e.style.left=Math.random()*100+"%";
+  e.style.fontSize=(Math.random()*30+10)+"px";
+  document.body.appendChild(e);
+}
+
+/* CHUVA */
+function coracao(){
+  let c=document.createElement("div");
+  c.innerHTML="❤️";
+  c.style.position="fixed";
+  c.style.top="-10px";
+  c.style.left=Math.random()*100+"vw";
+  c.style.animation="cair 5s linear";
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),5000);
+}
+setInterval(coracao,300);
+</script>
+
+</body>
+</html>
